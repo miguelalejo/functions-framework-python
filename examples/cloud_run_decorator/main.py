@@ -17,6 +17,7 @@
 import functions_framework
 from flask import escape
 from flask import abort
+import requests
 
 @functions_framework.http
 def hello_http(request):
@@ -37,7 +38,7 @@ def hello_http(request):
     }
     
     if request.method == 'OPTIONS':
-        user = request.get('https://functions-framework-python-pcqrvbtxdq-uc.a.run.app'
+        user = requests.get('https://functions-framework-python-pcqrvbtxdq-uc.a.run.app'
                         ).json()
         response = flask.jsonify(user)       
         response.headers.set('Access-Control-Allow-Origin', '*')
