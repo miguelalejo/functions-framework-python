@@ -63,7 +63,8 @@ def hello_http_post(request):
     for field in data:
         fields[field] = data[field]
         print('Processed field: %s' % field)   
-    formData = request.form['myFileData']
+        print('Processed field: %s' % data[field])
+    formData = data['myFileData']
     print(type(formData))
     fileBlob = formData[0]
     fileName = formData[1]
