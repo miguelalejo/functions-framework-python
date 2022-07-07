@@ -24,4 +24,4 @@ def hello_cloud_event(cloud_event):
 
 @functions_framework.http
 def hello_http(request):
-    return "Hello world!"
+    return "Hello world! My Friends"
