@@ -84,11 +84,12 @@ def hello_http_post(request):
         dataValues.append(data[field])
         print('Field: %s' % field)   
         print('Value: %s' % data[field])    
-    fileName = data['fileName']
-    fileBlob = data['fileBlob']
-    if fileBlob is None or fileName is None:
-        fileName = "None File"   
-    
+    fileName = None
+    fileBlob = None
+    if 'fileBlob' in fields:
+        fileBlob = data['fileBlob']
+    if 'fileName' in fields:
+        fileName = data['fileName']
     return 'Hello {}!'.format(escape(fileName))
 
 
