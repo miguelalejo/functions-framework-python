@@ -17,6 +17,24 @@
 import functions_framework
 from flask import escape
 
+@functions_framework.http
+def hello_method(request):
+    """ Responds to a GET request with "Hello world!". Forbids a PUT request.
+    Args:
+        request (flask.Request): The request object.
+        <https://flask.palletsprojects.com/en/1.1.x/api/#incoming-request-data>
+    Returns:
+        The response text, or any set of values that can be turned into a
+        Response object using `make_response`
+        <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
+    """  
+
+    if request.method == 'GET':
+        return hello_http_get(request)
+    elif request.method == 'PUT':
+        return hello_http_post(request)
+    else:
+        return abort(405)
 
 @functions_framework.cloud_event
 def hello_cloud_event(cloud_event):
@@ -24,7 +42,7 @@ def hello_cloud_event(cloud_event):
 
 
 @functions_framework.http
-def hello_http(request):
+def hello_http_get(request):
     return "Hello world! My Friends"
 
 @functions_framework.http
