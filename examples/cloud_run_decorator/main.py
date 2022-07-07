@@ -67,7 +67,7 @@ def hello_http_post(request):
         print('Value: %s' % data[field])
     fileBlob = data['fileBlob']
     fileName = data['fileName']
-    if fileBlob in None or fileName in None:
+    if fileBlob is None or fileName is None:
         fileName = "None File"   
     
     return 'Hello {}!'.format(escape(fileName))
