@@ -83,8 +83,8 @@ def hello_http_post(request):
         print('Field: %s' % field)   
         print('Value: %s' % data[field])
     fileBlob = None
-    if 'fileBlob' not in request.files:
-        flash('No file part')
+    if 'fileBlob' not in request.files:       
+        print('Not  Blob file')   
         return redirect(request.url)
     fileBlob = request.files['fileBlob']
     fileName = data['fileName']
