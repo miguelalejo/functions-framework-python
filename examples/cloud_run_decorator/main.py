@@ -29,13 +29,20 @@ def hello_http(request):
         Response object using `make_response`
         <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
     """  
+    headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST,GET',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '3600'
+    }
 
+    
     if request.method == 'GET':
-        return hello_http_get(request)
+        return (hello_http_get(request), 200, headers)
     elif request.method == 'POST':
-        return hello_http_post(request)
+        return (hello_http_post(request), 200, headers)
     elif request.method == 'PUT':
-        return hello_http_put(request)
+        return (hello_http_put(request), 200, headers)
     else:
         return abort(405)
 
