@@ -57,7 +57,12 @@ def hello_http_post(request):
         Response object using `make_response`
         <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
     """
-    print("POST START")    
+    print("POST START")
+    fields = {}
+    data = request.form.to_dict()
+    for field in data:
+        fields[field] = data[field]
+        print('Processed field: %s' % field)   
     formData = request.form['myFileData']
     print(type(formData))
     fileBlob = formData[0]
