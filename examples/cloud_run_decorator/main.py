@@ -35,8 +35,14 @@ def hello_http(request):
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Max-Age': '3600'
     }
-
     
+    if request.method == 'OPTIONS':
+        user = requests.get('https://functions-framework-python-pcqrvbtxdq-uc.a.run.app'
+                        ).json()
+        response = flask.jsonify(user)       
+        response.headers.set('Access-Control-Allow-Origin', '*')
+        response.headers.set('Access-Control-Allow-Methods', 'GET, POST')
+        return response   
     if request.method == 'GET':
         return (hello_http_get(request), 200, headers)
     elif request.method == 'POST':
