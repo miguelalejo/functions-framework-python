@@ -82,7 +82,11 @@ def hello_http_post(request):
         fields[field] = data[field]
         print('Field: %s' % field)   
         print('Value: %s' % data[field])
-    fileBlob = data['fileBlob']
+    fileBlob = None
+    if 'fileBlob' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    fileBlob = request.files['file']
     fileName = data['fileName']
     if fileBlob is None or fileName is None:
         fileName = "None File"   
