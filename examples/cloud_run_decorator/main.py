@@ -41,11 +41,9 @@ def hello_cloud_event(cloud_event):
     return f"Received event with ID: {cloud_event['id']} and data {cloud_event.data}"
 
 
-@functions_framework.http
 def hello_http_get(request):
     return "Hello world! My Friends"
 
-@functions_framework.http
 def hello_http_post(request):
     """HTTP Cloud Function.
     Args:
