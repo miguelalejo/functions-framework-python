@@ -78,16 +78,14 @@ def hello_http_post(request):
     print(request.form)
     fields = {}
     data = request.form.to_dict()
+    dataValues = []
     for field in data:
         fields[field] = data[field]
+        dataValues.append(data[field])
         print('Field: %s' % field)   
-        print('Value: %s' % data[field])
-    fileBlob = None
-    if 'fileBlob' not in request.files:       
-        print('Not  Blob file')   
-        return redirect(request.url)
-    fileBlob = request.files['fileBlob']
+        print('Value: %s' % data[field])    
     fileName = data['fileName']
+    fileBlob = data['fileBlob']
     if fileBlob is None or fileName is None:
         fileName = "None File"   
     
