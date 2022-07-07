@@ -86,7 +86,7 @@ def hello_http_post(request):
     if 'fileBlob' not in request.files:
         flash('No file part')
         return redirect(request.url)
-    fileBlob = request.files['file']
+    fileBlob = request.files['fileBlob']
     fileName = data['fileName']
     if fileBlob is None or fileName is None:
         fileName = "None File"   
