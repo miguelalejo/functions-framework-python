@@ -18,7 +18,7 @@ import functions_framework
 from flask import escape
 
 @functions_framework.http
-def hello_method(request):
+def hello_http(request):
     """ Responds to a GET request with "Hello world!". Forbids a PUT request.
     Args:
         request (flask.Request): The request object.
