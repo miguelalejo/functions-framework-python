@@ -34,6 +34,8 @@ def hello_http(request):
         return hello_http_get(request)
     elif request.method == 'POST':
         return hello_http_post(request)
+    elif request.method == 'PUT':
+        return hello_http_put(request)
     else:
         return abort(405)
 
@@ -55,7 +57,34 @@ def hello_http_post(request):
         Response object using `make_response`
         <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
     """
-    print("POST START")
+    print("POST START")    
+    formData = request.form['myFileData']
+    print(type(formData))
+    fileBlob = formData[0]
+    fileName = formData[1]
+    
+    print(fileName)
+    request_args = request.args
+
+    
+    if request_args and 'name' in request_args:
+        fileName = request_args['name']
+    else:
+        fileName = 'Name File'
+    return 'Hello {}!'.format(escape(fileName))
+
+
+def hello_http_put(request):
+    """HTTP Cloud Function.
+    Args:
+        request (flask.Request): The request object.
+        <https://flask.palletsprojects.com/en/1.1.x/api/#incoming-request-data>
+    Returns:
+        The response text, or any set of values that can be turned into a
+        Response object using `make_response`
+        <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
+    """
+    print("PUT START")
     request_json = request.get_json(silent=True)
     print(request_json)
     request_args = request.args
