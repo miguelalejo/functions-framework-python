@@ -15,6 +15,7 @@
 # This sample creates a function using the CloudEvents SDK
 # (https://github.com/cloudevents/sdk-python)
 import functions_framework
+import flask
 from flask import escape
 from flask import abort
 import requests
