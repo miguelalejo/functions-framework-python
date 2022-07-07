@@ -16,6 +16,7 @@
 # (https://github.com/cloudevents/sdk-python)
 import functions_framework
 from flask import escape
+from flask import abort
 
 @functions_framework.http
 def hello_http(request):
@@ -31,7 +32,7 @@ def hello_http(request):
 
     if request.method == 'GET':
         return hello_http_get(request)
-    elif request.method == 'PUT':
+    elif request.method == 'POST':
         return hello_http_post(request)
     else:
         return abort(405)
