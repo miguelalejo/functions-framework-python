@@ -37,7 +37,7 @@ def hello_http(request):
     }
     
     if request.method == 'OPTIONS':
-        user = requests.get('https://functions-framework-python-pcqrvbtxdq-uc.a.run.app'
+        user = request.get('https://functions-framework-python-pcqrvbtxdq-uc.a.run.app'
                         ).json()
         response = flask.jsonify(user)       
         response.headers.set('Access-Control-Allow-Origin', '*')
