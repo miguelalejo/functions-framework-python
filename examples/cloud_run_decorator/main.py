@@ -27,7 +27,7 @@ def hello_http(request):
     return "Hello world! My Friends"
 
 @functions_framework.http
-def hello_http(request):
+def hello_http_post(request):
     """HTTP Cloud Function.
     Args:
         request (flask.Request): The request object.
