@@ -12,6 +12,7 @@ COPY . .
 # Install production dependencies.
 RUN pip install functions-framework
 RUN pip install -r requirements.txt
+RUN pip install -U flask-cors
 
 # Run the web service on container startup.
 CMD exec functions-framework --target=hello_http
