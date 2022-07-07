@@ -58,25 +58,18 @@ def hello_http_post(request):
         <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
     """
     print("POST START")
+    print(request.form)
     fields = {}
     data = request.form.to_dict()
     for field in data:
         fields[field] = data[field]
-        print('Processed field: %s' % field)   
-        print('Processed field: %s' % data[field])
-    formData = data['myFileData']
-    print(type(formData))
-    fileBlob = formData[0]
-    fileName = formData[1]
+        print('Field: %s' % field)   
+        print('Value: %s' % data[field])
+    fileBlob = data['fileBlob']
+    fileName = data['fileName']
+    if fileBlob in None or fileName in None:
+        fileName = "None File"   
     
-    print(fileName)
-    request_args = request.args
-
-    
-    if request_args and 'name' in request_args:
-        fileName = request_args['name']
-    else:
-        fileName = 'Name File'
     return 'Hello {}!'.format(escape(fileName))
 
 
