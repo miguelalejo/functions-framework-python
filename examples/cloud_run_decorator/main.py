@@ -83,8 +83,12 @@ def hello_http_post(request):
         print('Field: %s' % field)   
         print('Value: %s' % data[field])    
     fileName = None  
+    idTransaction = None
     if 'fileName' in fields:
         fileName = data['fileName']
+
+    if 'idTransaction' in fields:
+        idTransaction = data['idTransaction']
     
     dataFiles = request.files.to_dict()        
     fieldsFiles = {}    
