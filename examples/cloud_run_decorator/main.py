@@ -77,7 +77,7 @@ def hello_http_post(request):
     print("POST START")
     print(request.form)
     fields = {}
-    data = request.form.to_dict()
+    data = request.form.to_dict()    
     dataValues = []
     for field in data:
         fields[field] = data[field]
@@ -90,6 +90,12 @@ def hello_http_post(request):
         fileBlob = data['fileBlob']
     if 'fileName' in fields:
         fileName = data['fileName']
+    
+    dataFiles = request.files.to_dict()        
+    fieldsData = {}
+    for field in dataFiles:
+        fieldsData[field] = dataFiles[field]
+        print('Field File: %s' % field)
     return 'Hello {}!'.format(escape(fileName))
 
 
