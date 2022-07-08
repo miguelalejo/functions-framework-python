@@ -92,10 +92,13 @@ def hello_http_post(request):
         fieldsFiles[field] = dataFiles[field]        
         print('Field File: %s' % field)
     
-    fileBlob = None
+    fileWapperBlob = None
     if 'fileBlob' in fieldsFiles:
-        fileBlob = dataFiles['fileBlob']
-        print('Type File: %s' % type(fileBlob))
+        fileWapperBlob = dataFiles['fileBlob']
+        print('Type File: %s' % type(fileWapperBlob))
+        filename = fileWapperBlob.filename
+        print('File Name: %s' % filename)
+        fBlob = fileWapperBlob.read()
     return 'Hello {}!'.format(escape(fileName))
 
 
