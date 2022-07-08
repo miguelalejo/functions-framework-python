@@ -77,25 +77,25 @@ def hello_http_post(request):
     print("POST START")
     print(request.form)
     fields = {}
-    data = request.form.to_dict()    
-    dataValues = []
+    data = request.form.to_dict()        
     for field in data:
-        fields[field] = data[field]
-        dataValues.append(data[field])
+        fields[field] = data[field]        
         print('Field: %s' % field)   
         print('Value: %s' % data[field])    
-    fileName = None
-    fileBlob = None
-    if 'fileBlob' in fields:
-        fileBlob = data['fileBlob']
+    fileName = None  
     if 'fileName' in fields:
         fileName = data['fileName']
     
     dataFiles = request.files.to_dict()        
-    fieldsData = {}
+    fieldsFiles = {}    
     for field in dataFiles:
-        fieldsData[field] = dataFiles[field]
+        fieldsFiles[field] = dataFiles[field]        
         print('Field File: %s' % field)
+    
+    fileBlob = None
+    if 'fileBlob' in fieldsFiles:
+        fileBlob = dataFiles['fileBlob']
+        print('Type File: %s' % type(fileBlob))
     return 'Hello {}!'.format(escape(fileName))
 
 
