@@ -19,6 +19,33 @@ import flask
 from flask import escape
 from flask import abort
 import requests
+import pymongo
+from pymongo.errors import BulkWriteError,DuplicateKeyError
+
+class App:
+    def __init__(self, uri, user, password):
+      self.client = pymongo.MongoClient("mongodb+srv://{user}:{password}@{uri}".format(user=user,password=password,uri=uri))
+
+
+    def close(self):
+        self.driver.close()
+
+    def insert_one(self,bd_name,collecion,value):
+      collection = self.client[bd_name][collecion]
+      doc_id = collection.insert_one(value).inserted_id
+      print(doc_id)
+    
+
+def createObject():
+    uri = "cluster0.2gzpcvj.mongodb.net/?retryWrites=true&w=majority"
+    user = "m001-student"
+    password = "m001-mongodb-basics"
+    app = App(uri, user, password)
+    try:
+        app.insert_one(bd_name="sample_training",collecion="inspections", value={'id': '10021-2015-NUEVA2022', 'certificate_number': 9278806, 'business_name': 'ATLIXCO TEST 2022.', 'date': 'Feb 20 2015', 'result': 'No Violation Issued', 'sector': 'Cigarette Retail Dealer - 127', 'address': {'city': 'RIDGEWOOD', 'zip': 11385, 'street': 'MENAHAN ST', 'number': 1712}}) 
+    except DuplicateKeyError as e:
+        print(e)
+        print("Errro insert")
 
 @functions_framework.http
 def hello_http(request):
@@ -103,6 +130,8 @@ def hello_http_post(request):
         filename = fileWapperBlob.filename
         print('File Name: %s' % filename)
         fBlob = fileWapperBlob.read()
+    print("CONNECT MONGO")
+    createObject()
     return 'Hello {}!'.format(escape(fileName))
 
 
