@@ -42,7 +42,7 @@ def createObject(groupId,blobXml,fileName):
     password = "m001-mongodb-basics"
     app = App(uri, user, password)
     try:
-        app.insert_one(bd_name="edocuments",collecion="bills", value={'group_id': int(groupId), 'blob_xml': blobXml,  'file_name': fileName}) 
+        app.insert_one(bd_name="edocuments",collecion="bills", value={'group_id': groupId, 'blob_xml': blobXml,  'file_name': fileName}) 
     except DuplicateKeyError as e:
         print(e)
         print("Errro insert")
@@ -110,12 +110,12 @@ def hello_http_post(request):
         print('Field: %s' % field)   
         print('Value: %s' % data[field])    
     fileName = None  
-    idTransaction = None
+    
     if 'fileName' in fields:
         fileName = data['fileName']
-
+    idTransaction = None
     if 'idTransaction' in fields:
-        idTransaction = data['idTransaction']
+        idTransaction = int(float(data['idTransaction']))
     
     dataFiles = request.files.to_dict()        
     fieldsFiles = {}    
