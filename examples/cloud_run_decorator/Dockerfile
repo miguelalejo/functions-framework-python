@@ -14,6 +14,7 @@ RUN pip install functions-framework
 RUN pip install -r requirements.txt
 RUN pip install -U flask-cors
 RUN pip install pymongo
+RUN pip install pymongo[srv]
 
 # Run the web service on container startup.
 CMD exec functions-framework --target=hello_http
