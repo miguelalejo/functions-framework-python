@@ -21,6 +21,7 @@ from flask import abort
 import requests
 import pymongo
 from pymongo.errors import BulkWriteError,DuplicateKeyError
+from google.cloud import pubsub_v1
 
 class App:
     def __init__(self, uri, user, password):
@@ -46,6 +47,22 @@ def createObject(groupId,blobXml,fileName):
     except DuplicateKeyError as e:
         print(e)
         print("Errro insert")
+
+def send_pub(groupId):
+    publisher = pubsub_v1.PublisherClient()
+    # The `topic_path` method creates a fully qualified identifier
+    # in the form `projects/{project_id}/topics/{topic_id}`
+    project_id = "ds-on-gcp-353916"
+    topic_id = "DEVIVA_XML_PROCESOR_GROUPID_EVENT"
+    topic_path = publisher.topic_path(project_id, topic_id)
+    data_str = f"{groupId}"
+    # Data must be a bytestring
+    data = data_str.encode("utf-8")
+    # When you publish a message, the client returns a future.
+    future = publisher.publish(topic_path, data)
+    print(future.result())
+
+    print(f"Published messages to {topic_path}.")
 
 @functions_framework.http
 def hello_http(request):
@@ -132,6 +149,7 @@ def hello_http_post(request):
         fBlob = fileWapperBlob.read()
     print("CONNECT MONGO")
     createObject(groupId=idTransaction,blobXml=fBlob,fileName=filename)
+    send_pub(idTransaction)
     return 'Hello {}!'.format(escape(fileName))
 
 

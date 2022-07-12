@@ -15,6 +15,7 @@ RUN pip install -r requirements.txt
 RUN pip install -U flask-cors
 RUN pip install pymongo
 RUN pip install pymongo[srv]
+RUN pip install --upgrade google-cloud-pubsub
 
 # Run the web service on container startup.
 CMD exec functions-framework --target=hello_http
