@@ -1,0 +1,9 @@
+gcloud pubsub topics create DEVIVA_XML_PROCESOR_GROUPID_EVENT
+
+gcloud pubsub subscriptions create DEVIVA_XML_PROCESOR_GROUPID_EVENT_SUB --topic DEVIVA_XML_PROCESOR_GROUPID_EVENT
+
+
+# Function dependencies, for example:
+# package>=version
+pymongo==3.11.0
+pymongo[srv]==3.11.0
