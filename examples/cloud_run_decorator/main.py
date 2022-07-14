@@ -148,8 +148,7 @@ def hello_http_post(request):
         print('File Name: %s' % filename)
         fBlob = fileWapperBlob.read()
     print("CONNECT MONGO")
-    createObject(groupId=idTransaction,blobXml=fBlob,fileName=filename)
-    send_pub(idTransaction)
+    createObject(groupId=idTransaction,blobXml=fBlob,fileName=filename)    
     return 'Hello {}!'.format(escape(fileName))
 
 
@@ -163,15 +162,17 @@ def hello_http_put(request):
         Response object using `make_response`
         <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
     """
-    print("PUT START")
-    request_json = request.get_json(silent=True)
-    print(request_json)
-    request_args = request.args
-
-    if request_json and 'name' in request_json:
-        name = request_json['name']
-    elif request_args and 'name' in request_args:
-        name = request_args['name']
-    else:
-        name = 'World'
-    return 'Hello {}!'.format(escape(name))
+    print("PUT START")    
+    fields = {}
+    data = request.form.to_dict()        
+    for field in data:
+        fields[field] = data[field]        
+        print('Field: %s' % field)   
+        print('Value: %s' % data[field])       
+    
+    idTransaction = None
+    if 'idTransaction' in fields:
+        idTransaction = int(float(data['idTransaction']))   
+    print("SEND PUB")    
+    send_pub(idTransaction)
+    return 'Hello {}!'.format(escape(idTransaction))
