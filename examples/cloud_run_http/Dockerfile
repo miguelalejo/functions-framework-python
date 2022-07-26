@@ -10,8 +10,8 @@ WORKDIR $APP_HOME
 COPY . .
 
 # Install production dependencies.
-RUN pip install functions-framework
 RUN pip install -r requirements.txt
 
-# Run the web service on container startup.
-CMD exec functions-framework --target=hello
+# Step 4: Run the web service on container startup using gunicorn webserver.
+CMD exec gunicorn --bind :$PORT --workers 1 --worker-class uvicorn.workers.UvicornWorker  --threads 8 main:app
+
