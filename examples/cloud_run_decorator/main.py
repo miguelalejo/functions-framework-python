@@ -135,7 +135,7 @@ def hello_http_get(request):
             }                
             listReportes.append(reporte)
 
-    return json.encode(listReportes, cls=JSONEncoder)
+    return JSONEncoder().encode(listReportes)
 
 def hello_http_post(request):
     """HTTP Cloud Function.
