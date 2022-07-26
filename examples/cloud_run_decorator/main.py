@@ -24,6 +24,13 @@ from pymongo.errors import BulkWriteError,DuplicateKeyError
 from google.cloud import pubsub_v1
 from MongoService import *
 import json
+from bson import ObjectId
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
     
 
 def createObject(groupId,blobXml,fileName):
@@ -128,7 +135,7 @@ def hello_http_get(request):
             }                
             listReportes.append(reporte)
 
-    return json.dumps(listReportes)
+    return json.encode(listReportes, cls=JSONEncoder)
 
 def hello_http_post(request):
     """HTTP Cloud Function.
