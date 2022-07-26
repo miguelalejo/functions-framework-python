@@ -22,28 +22,23 @@ import requests
 import pymongo
 from pymongo.errors import BulkWriteError,DuplicateKeyError
 from google.cloud import pubsub_v1
-
-class App:
-    def __init__(self, uri, user, password):
-      self.client = pymongo.MongoClient("mongodb+srv://{user}:{password}@{uri}".format(user=user,password=password,uri=uri))
-
-
-    def close(self):
-        self.driver.close()
-
-    def insert_one(self,bd_name,collecion,value):
-      collection = self.client[bd_name][collecion]
-      doc_id = collection.insert_one(value).inserted_id
-      print(doc_id)
+from MongoService import *
+import json
     
 
 def createObject(groupId,blobXml,fileName):
+    """Triggered from a message on a Cloud Pub/Sub topic.
+    Args:
+        event (dict): Event payload.
+        context (google.cloud.functions.Context): Metadata for the event.
+    """
+    pubsub_message = base64.b64decode(event['data']).decode('utf-8')
     uri = "cluster0.2gzpcvj.mongodb.net/?retryWrites=true&w=majority"
     user = "m001-student"
-    password = "m001-mongodb-basics"
-    app = App(uri, user, password)
+    password = "m001-mongodb-basics"    
+    mgConectorServ = MongoServiceConector(uri, user, password)
     try:
-        app.insert_one(bd_name="edocuments",collecion="bills", value={'group_id': groupId, 'blob_xml': blobXml,  'file_name': fileName}) 
+        mgConectorServ.insert_one(bd_name="edocuments",collecion="bills", value={'group_id': groupId, 'blob_xml': blobXml,  'file_name': fileName}) 
     except DuplicateKeyError as e:
         print(e)
         print("Errro insert")
@@ -106,7 +101,34 @@ def hello_cloud_event(cloud_event):
 
 
 def hello_http_get(request):
-    return "Hello world! My Friends"
+    """Triggered from a message on a Cloud Pub/Sub topic.
+    Args:
+        event (dict): Event payload.
+        context (google.cloud.functions.Context): Metadata for the event.
+    """    
+    uri = "cluster0.2gzpcvj.mongodb.net/?retryWrites=true&w=majority"
+    user = "m001-student"
+    password = "m001-mongodb-basics"    
+    mgConectorServ = MongoServiceConector(uri, user, password)    
+    documents = mgConectorServ.find(bd_name="edocuments",collecion="excel_dev_reports",query= {},projection={ "group_id": 1, "_id": 1 , 'ruc': 1,'date': 1})
+    listReportes = []
+    for doc in documents:
+        if "group_id" in doc.keys():
+            print(doc)
+            print("Generar Blob")
+            groupId = doc["group_id"]
+            idTran = doc["_id"]
+            ruc = doc["ruc"]
+            date = doc["date"]
+            reporte = {
+            "groupId": groupId,
+            "idTran": idTran,
+            "ruc": ruc,
+            "date":date
+            }                
+            listReportes.append(reporte)
+
+    return json.dumps(listReportes)
 
 def hello_http_post(request):
     """HTTP Cloud Function.
