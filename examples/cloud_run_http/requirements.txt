@@ -1,1 +1,8 @@
 # Optionally include additional dependencies here
+fastapi
+geocoder
+gunicorn
+pydantic
+uvicorn
+uvloop
+httptools

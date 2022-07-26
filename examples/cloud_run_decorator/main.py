@@ -27,9 +27,6 @@ import json
 from bson import ObjectId
 from datetime import date, datetime
 import base64
-from flask import Flask, request
-#Define an internal Flask app
-app = Flask("internal")
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -211,9 +208,3 @@ def hello_http_put(request):
     print("SEND PUB")    
     send_pub(idTransaction)
     return 'Hello {}!'.format(escape(idTransaction))
-
-
-@app.route('/user/<string:id>', methods=['GET', 'POST'])
-def users(id):
-    print(id)
-    return id, 200
