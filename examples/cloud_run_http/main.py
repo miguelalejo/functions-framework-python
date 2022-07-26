@@ -25,4 +25,4 @@ def read_item(item_id: str):
         report_xls = document["blob_excel"]
         print(type(report_xls))
         print(report_xls)   
-    return  StreamingResponse(report_xls, media_type="application/vnd.ms-excel")
+    return  report_xls
