@@ -26,6 +26,7 @@ from MongoService import *
 import json
 from bson import ObjectId
 from datetime import date, datetime
+import base64
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
