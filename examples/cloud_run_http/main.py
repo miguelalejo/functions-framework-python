@@ -29,4 +29,4 @@ def read_item(item_id: str):
         print(type(report_xls))
         print(report_xls)
     print("Final")
-    return   StreamingResponse(fake_video_streamer(report_xls))
+    return   StreamingResponse(fake_video_streamer(report_xls), media_type="application/vnd.ms-excel")
