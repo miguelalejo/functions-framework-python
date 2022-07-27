@@ -12,6 +12,9 @@ def read_root():
     return {"Hello": "World"}
 
 
+async def fake_video_streamer(report_xls):
+    yield report_xls
+
 @app.get("/reportes/{item_id}")
 def read_item(item_id: str):
     uri = "cluster0.2gzpcvj.mongodb.net/?retryWrites=true&w=majority"
@@ -26,4 +29,4 @@ def read_item(item_id: str):
         print(type(report_xls))
         print(report_xls)
     print("Final")
-    return  report_xls
+    return   StreamingResponse(fake_video_streamer(report_xls))
