@@ -24,5 +24,6 @@ def read_item(item_id: str):
     if "blob_excel" in document.keys():
         report_xls = document["blob_excel"]
         print(type(report_xls))
-        print(report_xls)   
+        print(report_xls)
+    print("Final")
     return  report_xls
