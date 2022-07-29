@@ -53,16 +53,15 @@ def createObject(groupId,blobXml,fileName):
         print(e)
         print("Errro insert")
 
-def send_pub(groupId):
+def send_pub(dataVal):
     publisher = pubsub_v1.PublisherClient()
     # The `topic_path` method creates a fully qualified identifier
     # in the form `projects/{project_id}/topics/{topic_id}`
     project_id = "ds-on-gcp-353916"
     topic_id = "DEVIVA_XML_PROCESOR_GROUPID_EVENT"
-    topic_path = publisher.topic_path(project_id, topic_id)
-    data_str = f"{groupId}"
+    topic_path = publisher.topic_path(project_id, topic_id)    
     # Data must be a bytestring
-    data = data_str.encode("utf-8")
+    data = json.dumps(dataVal).encode("utf-8")
     # When you publish a message, the client returns a future.
     future = publisher.publish(topic_path, data)
     print(future.result())
@@ -203,8 +202,12 @@ def hello_http_put(request):
         print('Value: %s' % data[field])       
     
     idTransaction = None
+    nFiles = 0
     if 'idTransaction' in fields:
-        idTransaction = int(float(data['idTransaction']))   
-    print("SEND PUB")    
-    send_pub(idTransaction)
+        idTransaction = int(float(data['idTransaction']))
+    if 'nFiles' in fields:
+        nFiles = int(float(data['nFiles']))
+    print("SEND PUB")
+    dataVal = {"idTransaction":idTransaction,"nFiles":nFiles}
+    send_pub(dataVal)
     return 'Hello {}!'.format(escape(idTransaction))
