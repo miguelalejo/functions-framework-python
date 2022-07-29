@@ -209,5 +209,6 @@ def hello_http_put(request):
         nFiles = int(float(data['nFiles']))
     print("SEND PUB")
     dataVal = {"idTransaction":idTransaction,"nFiles":nFiles}
+    print("Data",dataVal)
     send_pub(dataVal)
     return 'Hello {}!'.format(escape(idTransaction))
