@@ -13,6 +13,11 @@ class MongoServiceConector:
         collection = self.client[bd_name][collecion]
         documents = collection.find(query,projection)
         return documents
+    
+    def findSort(self,bd_name,collecion,query,projection = {},sortValue):
+        collection = self.client[bd_name][collecion]
+        documents = collection.find(query,projection).sort(sortValue,pymongo.DESCENDING)
+        return documents
         
     def insert_one(self,bd_name,collecion,value):
         collection = self.client[bd_name][collecion]

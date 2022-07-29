@@ -120,7 +120,7 @@ def hello_http_get(request):
     user = "m001-student"
     password = "m001-mongodb-basics"    
     mgConectorServ = MongoServiceConector(uri, user, password)    
-    documents = mgConectorServ.find(bd_name="edocuments",collecion="excel_dev_reports",query= {},projection={ "group_id": 1, "_id": 1 , 'ruc': 1,'date': 1})
+    documents = mgConectorServ.findSort(bd_name="edocuments",collecion="excel_dev_reports",query= {},projection={ "group_id": 1, "_id": 1 , 'ruc': 1,'date': 1},sortValue='date')
     listReportes = []
     for doc in documents:
         if "group_id" in doc.keys():
