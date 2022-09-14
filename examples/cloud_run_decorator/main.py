@@ -57,7 +57,7 @@ def send_pub(dataVal):
     publisher = pubsub_v1.PublisherClient()
     # The `topic_path` method creates a fully qualified identifier
     # in the form `projects/{project_id}/topics/{topic_id}`
-    project_id = "ds-on-gcp-353916"
+    project_id = "bazarservicios"
     topic_id = "DEVIVA_XML_PROCESOR_GROUPID_EVENT"
     topic_path = publisher.topic_path(project_id, topic_id)    
     # Data must be a bytestring
